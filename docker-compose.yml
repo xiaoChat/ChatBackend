@@ -1,0 +1,60 @@
+version: "3.8"
+services:
+  nginx:
+    image: nginx:1.18.0
+    ports:
+      - "9501:9501"
+    volumes:
+      - "./server/nginx/nginx.conf:/etc/nginx/nginx.conf"
+      - "./server/nginx/conf.d:/etc/nginx/conf.d"
+      - "./runtime/docker/nginx/log:/var/log/nginx"
+      - ".:/usr/share/nginx/html"
+
+  hf:
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ".:/opt/www"
+    # 开发模式（热重载）， 有时候不好用。建议手动重启
+    # command: "php -S 0.0.0.0:80"
+    command: sh -c "composer install && php /opt/www/watch"
+
+  mysql:
+    image: mysql:8.0.19
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+    ports:
+      - "13306:3306"
+    volumes:
+      - ./runtime/docker/data/mysql:/var/lib/mysql
+
+  redis:
+    image: redis:4-alpine
+    sysctls:
+      net.core.somaxconn: 65535
+
+  mongo:
+    image: mongo
+    volumes:
+      - "./runtime/docker/data/mongo:/data/db"
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123456
+    tty: true
+
+  consul:
+    image: consul:1.8.3
+    ports: 
+      - "8500:8500"
+
+  swagger-ui:
+    image: swaggerapi/swagger-ui:v3.36.2
+    environment: 
+      - SWAGGER_JSON_URL=/doc/swagger.yaml
+    ports: 
+      - 9999:8080
+    volumes: 
+      - "./doc:/usr/share/nginx/html/doc"
