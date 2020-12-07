@@ -23,3 +23,8 @@ Router::addGroup(
     },
     ['middleware' => [CorsMiddleware::class]]
 );
+
+// Websocket
+Router::addServer('ws', function () {
+    Router::get('/', 'App\Controller\Chat\WebSocketController');
+});

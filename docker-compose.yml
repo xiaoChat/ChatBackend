@@ -14,6 +14,8 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile.dev
+    ports:
+      - "9502:9502"
     volumes:
       - ".:/opt/www"
     # 开发模式（热重载）， 有时候不好用。建议手动重启
