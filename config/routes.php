@@ -10,6 +10,7 @@ declare(strict_types=1);
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
 
+use App\Middleware\ApiMiddleware;
 use App\Middleware\CorsMiddleware;
 use Hyperf\HttpServer\Router\Router;
 
@@ -22,6 +23,29 @@ Router::addGroup(
         Router::addRoute(['GET', 'POST'], '/', 'App\Controller\IndexController@index');
     },
     ['middleware' => [CorsMiddleware::class]]
+);
+
+// 用户模块
+
+// 登录注册
+Router::addGroup(
+    '/user/',
+    function () {
+        Router::addRoute('POST', 'login', 'App\Controller\User\UserController@login');
+        Router::addRoute('POST', 'register', 'App\Controller\User\UserController@register');
+        Router::addRoute('POST', 'changePassword', 'App\Controller\User\UserController@changePassword');
+    },
+    ['middleware' => [CorsMiddleware::class]]
+);
+
+// 用户资料
+Router::addGroup(
+    '/user/profile',
+    function () {
+        Router::addRoute('GET', '', 'App\Controller\User\ProfileController@getUserProfile');
+        Router::addRoute('POST', '', 'App\Controller\User\ProfileController@setUserProfile');
+    },
+    ['middleware' => [CorsMiddleware::class, ApiMiddleware::class]]
 );
 
 // Websocket
