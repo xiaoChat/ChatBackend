@@ -42,6 +42,10 @@ class BaseMongo
      */
     public function query(array $filter, array $options = [])
     {
+        $filter['$or'] = [
+            [$this->deleteAt => ['$exists' => false]],
+            [$this->deleteAt => ['$eq' => null]],
+        ];
         return $this->Client->query($this->getName(), $filter, $options);
     }
 
