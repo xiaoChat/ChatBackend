@@ -39,7 +39,7 @@ class ChatController implements OnMessageInterface, OnOpenInterface, OnCloseInte
 
     public function onOpen($server, Request $request): void
     {
-        Redis::hset('chat:session', 'chat:session:' . $request->fd, json_encode(['name' => 'yexk' . rand(10000, 200000), 'date' => rand(10000, 200000)]));
+        Redis::hset('chat:session', 'chat:session:' . $request->fd, json_encode(['name' => $request->fd.'yexk' . rand(10000, 200000), 'date' => rand(10000, 200000)]));
         $server->push($request->fd, $request->fd . 'Opened');
     }
 }

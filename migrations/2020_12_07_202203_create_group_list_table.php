@@ -13,7 +13,7 @@ class CreateGroupListTable extends Migration
     {
         Schema::create('group_list', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigIncrements('group_no')->index()->comment('群聊编号');
+            $table->bigInteger('group_no')->index()->comment('群聊编号');
             $table->bigInteger('owner_user_id')->comment('群主user_id');
             $table->integer('type')->default('1')->comment('群聊类型, 1 普通群，2 vip群');
             $table->string('name')->comment('群聊名称');

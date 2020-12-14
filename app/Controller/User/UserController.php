@@ -4,13 +4,21 @@ declare(strict_types=1);
 
 namespace App\Controller\User;
 
+use App\Constants\ApiCode;
 use App\Controller\BaseController;
-use App\Model\Mongo\MessageMongo;
+use App\Model\Logic\UserLogic;
+use Hyperf\Di\Annotation\Inject;
 use OpenApi\Annotations as OA;
 use Psr\Http\Message\ResponseInterface;
 
 class UserController extends BaseController
 {
+    /**
+     * @Inject
+     * @var UserLogic
+     */
+    protected $UserLogic;
+
     /**
      * @OA\Get(
      *     path="/user/login",
@@ -26,9 +34,18 @@ class UserController extends BaseController
      */
     public function login(): ResponseInterface
     {
-        $Message = new MessageMongo();
-        $res = $Message->add();
-        return $this->success($res);
+        $username = $this->request->input('username');
+        $password = $this->request->input('password');
+        $user = $this->UserLogic->login($username, $password);
+        if ($user) {
+            // 设置缓存
+            $token = $this->UserLogic->setToken($user);
+            return $this->success([
+                'token' => $token,
+                'userinfo' => $user,
+            ]);
+        }
+        return $this->success();
     }
 
     /**
@@ -36,13 +53,33 @@ class UserController extends BaseController
      */
     public function register(): ResponseInterface
     {
-        return $this->success();
+        $username = $this->request->input('username');
+        $password = $this->request->input('password');
+        $user = $this->UserLogic->register($username, $password);
+        if ($user) {
+            $token = $this->UserLogic->setToken($user);
+            return $this->success([
+                'token' => $token,
+                'userinfo' => $user,
+            ]);
+        }
+        return $this->fail(ApiCode::USER_REGISTER_FAIL);
     }
 
     /**
      * 忘记密码，找回密码
      */
     public function changePassword(): ResponseInterface
+    {
+        return $this->success();
+    }
+
+    public function info(): ResponseInterface
+    {
+        return $this->success();
+    }
+
+    public function changeInfo(): ResponseInterface
     {
         return $this->success();
     }

@@ -41,7 +41,8 @@
         "hyperf/crontab": "^2.0",
         "zircote/swagger-php": "^3.1",
         "hyperf/websocket-server": "^2.0",
-        "hyperf/task": "^2.0"
+        "hyperf/task": "^2.0",
+        "hyperf/snowflake": "^2.0"
     },
     "require-dev": {
         "swoole/ide-helper": "^4.5",

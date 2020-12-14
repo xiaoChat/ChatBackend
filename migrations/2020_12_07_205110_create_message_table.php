@@ -14,7 +14,7 @@ class CreateMessageTable extends Migration
         Schema::create('message', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->tinyInteger('msg_type')->default('1')->comment('消息类型，1普通内容，2图片，3视频，4 友链');
-            $table->bigIncrements('user_id')->index();
+            $table->bigInteger('user_id')->index();
             $table->string('friend_id')->index();
             $table->text('context')->comment('消息内容');
             $table->timestamp('send_time')->comment('发送时间');

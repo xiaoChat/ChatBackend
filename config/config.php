@@ -38,6 +38,7 @@ if (env('APP_ENV', 'dev') == 'dev') {
 return [
     'app_name' => env('APP_NAME', 'skeleton'),
     'app_env' => env('APP_ENV', 'dev'),
+    'app_key' => env('APP_KEY', ''),
     'scan_cacheable' => env('SCAN_CACHEABLE', false),
     StdoutLoggerInterface::class => $logger,
 ];

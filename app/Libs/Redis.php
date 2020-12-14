@@ -9,4 +9,6 @@ use App\Libs\RedisDriver\RedisDriver;
 class Redis extends RedisDriver
 {
     const TTL = 86400;
+
+    const TOKEN_KEY = 'user:token:';
 }

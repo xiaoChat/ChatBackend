@@ -34,6 +34,8 @@ Router::addGroup(
         Router::addRoute('POST', 'login', 'App\Controller\User\UserController@login');
         Router::addRoute('POST', 'register', 'App\Controller\User\UserController@register');
         Router::addRoute('POST', 'changePassword', 'App\Controller\User\UserController@changePassword');
+        Router::addRoute('GET', 'info', 'App\Controller\User\UserController@info');
+        Router::addRoute('POST', 'info', 'App\Controller\User\UserController@changeInfo');
     },
     ['middleware' => [CorsMiddleware::class]]
 );

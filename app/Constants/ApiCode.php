@@ -49,4 +49,10 @@ class ApiCode extends AbstractConstants
      * @Message("fail!")
      */
     const FAIL = 1;
+    
+    /**
+     * @Message("The user name already exists!")
+     */
+    const USER_REGISTER_FAIL = 1000;
+
 }

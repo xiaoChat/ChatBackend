@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller\Chat;
@@ -23,6 +24,6 @@ class WebSocketController implements OnMessageInterface, OnOpenInterface, OnClos
 
     public function onOpen($server, Request $request): void
     {
-        $server->push($request->fd, $request->fd.'Opened');
+        $server->push($request->fd, $request->fd . 'Opened');
     }
 }
