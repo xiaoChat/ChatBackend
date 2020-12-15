@@ -65,11 +65,13 @@ class UserLogic
         return false;
     }
 
-    public function changePassword(string $password, string $newpassword, int $id)
+    public function changePassword(string $password, string $newpassword, int $id): bool
     {
         $userData = User::query()->find($id);
         if ($userData && $userData->password === $this->User->password($password)) {
             $userData->password = $this->User->password($newpassword);
+            $userData->save();
+            return true;
         }
         return false;
     }

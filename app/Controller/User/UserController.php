@@ -83,7 +83,10 @@ class UserController extends BaseController
             return $this->fail(ApiCode::PARAMS_REQUEST);
         }
         $user_id = $this->request->getAttribute('user_id');
-        $this->UserLogic->changePassword($password, $newpassword, $user_id);
-        return $this->success();
+        $res = $this->UserLogic->changePassword($password, $newpassword, $user_id);
+        if ($res) {
+            return $this->success();
+        }
+        return $this->fail();
     }
 }
