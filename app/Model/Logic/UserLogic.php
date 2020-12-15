@@ -19,9 +19,15 @@ class UserLogic
      */
     private $Common;
 
+    /**
+     * @Inject
+     * @var User
+     */
+    private $User;
+
     public function register(string $username, string $password)
     {
-        $res = User::where(['username' => $username])->first();
+        $res = User::query()->where(['username' => $username])->first();
         if ($res) {
             return false;
         }
@@ -30,7 +36,7 @@ class UserLogic
             $userData = [
                 'chat_no' => $this->Common->getIdGenerator(),
                 'username' => $username,
-                'password' => (new User())->password($password),
+                'password' => $this->User->password($password),
             ];
             $user = User::create($userData);
             $profileData = [
@@ -52,11 +58,27 @@ class UserLogic
 
     public function login(string $username, string $password)
     {
-        $userData = User::where(['username' => $username])->first();
-        if ($userData && $userData->password === (new User())->password($password)) {
+        $userData = User::query()->where(['username' => $username])->first();
+        if ($userData && $userData->password === $this->User->password($password)) {
             return $userData->toArray();
         }
         return false;
+    }
+
+    public function changePassword(string $password, string $newpassword, int $id)
+    {
+        $userData = User::query()->find($id);
+        if ($userData && $userData->password === $this->User->password($password)) {
+            $userData->password = $this->User->password($newpassword);
+        }
+        return false;
+    }
+
+    public function getUserDetailById(int $id)
+    {
+        $user = User::query()->find($id);
+        $user->profile;
+        return $user;
     }
 
     public function setToken(array $userData)
@@ -65,5 +87,15 @@ class UserLogic
         $key = Redis::TOKEN_KEY . $token;
         Redis::set($key, json_encode($userData), Redis::TTL);
         return $token;
+    }
+
+    public function getUserInfoByToken(string $token)
+    {
+        $key = Redis::TOKEN_KEY . $token;
+        $data = Redis::get($key);
+        if ($data) {
+            return json_decode($data);
+        }
+        return $data;
     }
 }

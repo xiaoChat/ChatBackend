@@ -34,18 +34,16 @@ Router::addGroup(
         Router::addRoute('POST', 'login', 'App\Controller\User\UserController@login');
         Router::addRoute('POST', 'register', 'App\Controller\User\UserController@register');
         Router::addRoute('POST', 'changePassword', 'App\Controller\User\UserController@changePassword');
-        Router::addRoute('GET', 'info', 'App\Controller\User\UserController@info');
-        Router::addRoute('POST', 'info', 'App\Controller\User\UserController@changeInfo');
     },
     ['middleware' => [CorsMiddleware::class]]
 );
 
 // 用户资料
 Router::addGroup(
-    '/user/profile',
+    '/user/',
     function () {
-        Router::addRoute('GET', '', 'App\Controller\User\ProfileController@getUserProfile');
-        Router::addRoute('POST', '', 'App\Controller\User\ProfileController@setUserProfile');
+        Router::addRoute('GET', 'profile', 'App\Controller\User\ProfileController@getUserProfile');
+        Router::addRoute('POST', 'profile', 'App\Controller\User\ProfileController@setUserProfile');
     },
     ['middleware' => [CorsMiddleware::class, ApiMiddleware::class]]
 );

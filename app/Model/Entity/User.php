@@ -53,6 +53,11 @@ class User extends Model
      */
     protected $casts = ['id' => 'integer', 'chat_no' => 'integer', 'user_state_id' => 'integer', 'status' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
 
+    public function profile()
+    {
+        return $this->hasOne(Profile::class, 'user_id', 'id');
+    }
+
     public function password($password)
     {
         return md5(md5($password . config('app_key')));

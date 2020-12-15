@@ -51,8 +51,13 @@ class ApiCode extends AbstractConstants
     const FAIL = 1;
     
     /**
+     * @Message("This parameter must be passed!")
+     */
+    const PARAMS_REQUEST = 1000;
+    
+    /**
      * @Message("The user name already exists!")
      */
-    const USER_REGISTER_FAIL = 1000;
+    const USER_REGISTER_FAIL = 1001;
 
 }

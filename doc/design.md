@@ -49,7 +49,8 @@
    - 请求([POST] /user/changePassword)
       | 参数名   | 类型   | 是否必填 | 描述   |
       | -------- | ------ | -------- | ------ |
-      | username | string | 是       | 用户名 |
+      | password | string | 是       | 旧密码 |
+      | newpassword | string | 是       | 新密码 |
    - 响应
       | 参数名        | 是否必填 | 描述                            |
       | ------------- | -------- | ------------------------------- |
@@ -59,7 +60,7 @@
       | data.callback | string   | 修改密码url, 携带信息去重置密码 |
 
 4. 用户资料
-   - 请求([GET] /user/info)
+   - 请求([GET] /user/profile)
       | 参数名 | 类型   | 是否必填 | 描述      |
       | ------ | ------ | -------- | --------- |
       | token  | string | 是       | 用户token |
@@ -72,7 +73,7 @@
       | data.userinfo | Object | 用户信息       |
 
 5. 修改用户资料
-   - 请求([POST] /user/info)
+   - 请求([POST] /user/profile)
       | 参数名   | 类型   | 是否必填 | 描述      |
       | -------- | ------ | -------- | --------- |
       | userinfo | Object | 是       | 用户资料  |

@@ -34,8 +34,11 @@ class UserController extends BaseController
      */
     public function login(): ResponseInterface
     {
-        $username = $this->request->input('username');
-        $password = $this->request->input('password');
+        $username = trim($this->request->input('username'));
+        $password = trim($this->request->input('password'));
+        if (! $username || ! $password) {
+            return $this->fail(ApiCode::PARAMS_REQUEST);
+        }
         $user = $this->UserLogic->login($username, $password);
         if ($user) {
             // 设置缓存
@@ -53,8 +56,11 @@ class UserController extends BaseController
      */
     public function register(): ResponseInterface
     {
-        $username = $this->request->input('username');
-        $password = $this->request->input('password');
+        $username = trim($this->request->input('username'));
+        $password = trim($this->request->input('password'));
+        if (! $username || ! $password) {
+            return $this->fail(ApiCode::PARAMS_REQUEST);
+        }
         $user = $this->UserLogic->register($username, $password);
         if ($user) {
             $token = $this->UserLogic->setToken($user);
@@ -71,16 +77,13 @@ class UserController extends BaseController
      */
     public function changePassword(): ResponseInterface
     {
-        return $this->success();
-    }
-
-    public function info(): ResponseInterface
-    {
-        return $this->success();
-    }
-
-    public function changeInfo(): ResponseInterface
-    {
+        $password = trim($this->request->input('password'));
+        $newpassword = trim($this->request->input('newpassword'));
+        if (! $password || ! $newpassword) {
+            return $this->fail(ApiCode::PARAMS_REQUEST);
+        }
+        $user_id = $this->request->getAttribute('user_id');
+        $this->UserLogic->changePassword($password, $newpassword, $user_id);
         return $this->success();
     }
 }
