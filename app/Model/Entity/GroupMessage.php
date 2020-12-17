@@ -28,14 +28,7 @@ class GroupMessage extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'msg_type',
-        'user_id',
-        'group_id',
-        'context',
-        'send_time',
-        'is_read',
-    ];
+    protected $fillable = ['msg_type', 'user_id', 'group_id', 'context', 'send_time', 'is_read'];
     /**
      * The attributes that should be cast to native types.
      *

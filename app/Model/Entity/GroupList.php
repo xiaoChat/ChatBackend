@@ -28,14 +28,7 @@ class GroupList extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'group_no',
-        'owner_user_id',
-        'type',
-        'name',
-        'avatar',
-        'describe',
-    ];
+    protected $fillable = ['group_no', 'owner_user_id', 'type', 'name', 'avatar', 'describe'];
     /**
      * The attributes that should be cast to native types.
      *

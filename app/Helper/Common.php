@@ -7,6 +7,8 @@ namespace App\Helper;
 use App\Constants\ApiCode;
 use Hyperf\Snowflake\IdGeneratorInterface;
 use Hyperf\Utils\ApplicationContext;
+use Hyperf\Utils\Context;
+use Psr\Http\Message\ServerRequestInterface;
 
 class Common
 {
@@ -21,27 +23,8 @@ class Common
 
     public function getIpAddress()
     {
-        if ($_SERVER['HTTP_CLIENT_IP'] && strcasecmp($_SERVER['HTTP_CLIENT_IP'], 'unknown')) {
-            $ip = $_SERVER['HTTP_CLIENT_IP'];
-        } else {
-            if ($_SERVER['HTTP_X_FORWARDED_FOR'] && strcasecmp($_SERVER['HTTP_X_FORWARDED_FOR'], 'unknown')) {
-                $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-            } else {
-                if ($_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'], 'unknown')) {
-                    $ip = $_SERVER['REMOTE_ADDR'];
-                } else {
-                    if (isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp(
-                        $_SERVER['REMOTE_ADDR'],
-                        'unknown'
-                    )
-                    ) {
-                        $ip = $_SERVER['REMOTE_ADDR'];
-                    } else {
-                        $ip = 'unknown';
-                    }
-                }
-            }
-        }
+        $request = Context::get(ServerRequestInterface::class);
+        $ip = $request->getHeader('x-forwarded-for')[0] ?? 'unknown';
         return $ip;
     }
 
@@ -51,9 +34,9 @@ class Common
         $generator = $container->get(IdGeneratorInterface::class);
         return $generator->generate();
     }
-    
+
     public function uuid()
     {
-        return md5(config('app_key').time().uniqid());
+        return md5(config('app_key') . time() . uniqid());
     }
 }

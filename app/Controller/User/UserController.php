@@ -63,7 +63,7 @@ class UserController extends BaseController
         }
         $user = $this->UserLogic->register($username, $password);
         if ($user) {
-            $token = $this->UserLogic->setToken($user);
+            $token = $this->UserLogic->setToken($user->toArray());
             return $this->success([
                 'token' => $token,
                 'userinfo' => $user,

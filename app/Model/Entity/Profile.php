@@ -33,19 +33,7 @@ class Profile extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'user_id',
-        'sex',
-        'age',
-        'birthday',
-        'desc',
-        'mobile',
-        'email',
-        'register_ip',
-        'last_login_ip',
-        'register_time',
-        'last_login_time',
-    ];
+    protected $fillable = ['user_id', 'sex', 'age', 'birthday', 'desc', 'mobile', 'email', 'register_ip', 'last_login_ip', 'register_time', 'last_login_time'];
     /**
      * The attributes that should be cast to native types.
      *

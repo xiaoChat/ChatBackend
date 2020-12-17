@@ -42,8 +42,24 @@ Router::addGroup(
 Router::addGroup(
     '/user/',
     function () {
+        // 用户信息
         Router::addRoute('GET', 'profile', 'App\Controller\User\ProfileController@getUserProfile');
         Router::addRoute('POST', 'profile', 'App\Controller\User\ProfileController@setUserProfile');
+        
+        // 好友
+        Router::addRoute('GET', 'friends', 'App\Controller\User\FriendController@getFriends');
+        Router::addRoute('POST', 'friends/{id}', 'App\Controller\User\FriendController@addFriends');
+        Router::addRoute('GET', 'friends/search', 'App\Controller\User\FriendController@searchFriends');
+    },
+    ['middleware' => [CorsMiddleware::class, ApiMiddleware::class]]
+);
+
+// 聊天
+Router::addGroup(
+    '/chat/',
+    function () {
+        Router::addRoute('POST', 'sendMessage/{id}', 'App\Controller\Chat\MessageController@sendMessage');
+        Router::addRoute('POST', 'profile', 'App\Controller\Chat\MessageController@setUserProfile');
     },
     ['middleware' => [CorsMiddleware::class, ApiMiddleware::class]]
 );

@@ -24,10 +24,7 @@ class GroupUser extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'group_id',
-        'user_id',
-    ];
+    protected $fillable = ['group_id', 'user_id'];
     /**
      * The attributes that should be cast to native types.
      *

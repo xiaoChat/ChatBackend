@@ -48,7 +48,8 @@ class ApiMiddleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         // 根据具体业务判断逻辑走向，这里假设用户携带的token有效
-        $isValid = $this->checkToken($this->request->header('token'));
+        $token = $this->request->header('token') ?? 'null';
+        $isValid = $this->checkToken($token);
         if ($isValid) {
             // add base userinfo
             $request = $request->withAttribute('userinfo', $isValid);

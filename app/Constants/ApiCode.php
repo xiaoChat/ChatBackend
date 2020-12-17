@@ -20,6 +20,8 @@ use Hyperf\Constants\Annotation\Constants;
  */
 class ApiCode extends AbstractConstants
 {
+    const MODEL_TYPE = -2;
+
     /**
      * @Message("Server Error!")
      */
@@ -59,5 +61,10 @@ class ApiCode extends AbstractConstants
      * @Message("The user name already exists!")
      */
     const USER_REGISTER_FAIL = 1001;
+    
+    /**
+     * @Message("The user info is not exsit!")
+     */
+    const USER_INFO_ERROR = 1002;
 
 }

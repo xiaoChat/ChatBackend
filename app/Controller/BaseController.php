@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Constants\ApiCode;
+use App\Constants\ModelCode;
 use App\Helper\Common;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Contract\RequestInterface;
@@ -29,20 +30,20 @@ use Psr\Http\Message\ResponseInterface as MessageResponseInterface;
  * @OA\Schema(
  *     schema="RespModel",
  *     @OA\Property(
- *          property="code",
- *          type="int",
- *          description="响应状态"
- *      ),
+ *         property="code",
+ *         type="int",
+ *         description="响应状态"
+ *     ),
  *     @OA\Property(
- *          property="message",
- *          type="string",
- *          description="响应message"
- *      ),
+ *         property="message",
+ *         type="string",
+ *         description="响应message"
+ *     ),
  *     @OA\Property(
- *          property="data",
- *          type="Object",
- *          description="响应数据结构"
- *      ),
+ *         property="data",
+ *         type="Object",
+ *         description="响应数据结构"
+ *     ),
  * )
  */
 class BaseController
@@ -78,9 +79,13 @@ class BaseController
         return $this->response->json($data);
     }
 
-    protected function fail($code = ApiCode::FAIL, $data = null): MessageResponseInterface
+    protected function fail($code = ApiCode::FAIL, $data = null, $type = ApiCode::MODEL_TYPE): MessageResponseInterface
     {
-        $data = $this->common->json($code, $data);
+        $message = '';
+        if ($type == ModelCode::MODEL_TYPE) {
+            $message = ModelCode::getMessage($code);
+        }
+        $data = $this->common->json($code, $data, $message);
 
         return $this->response->json($data);
     }

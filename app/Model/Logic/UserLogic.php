@@ -100,4 +100,17 @@ class UserLogic
         }
         return $data;
     }
+
+    public function checkByUserId(int $user_id)
+    {
+        return User::query()->find($user_id);
+    }
+
+    public function search(string $name)
+    {
+        return User::query()
+            ->select(['id', 'chat_no', 'username', 'nickname', 'avatar'])
+            ->where('username', 'like', $name . '%')
+            ->get();
+    }
 }

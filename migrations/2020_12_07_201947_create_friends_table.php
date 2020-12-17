@@ -16,6 +16,8 @@ class CreateFriendsTable extends Migration
             $table->bigInteger('user_id')->index();
             $table->bigInteger('friend_id')->index();
             $table->string('name')->nullable()->comment('用户备注');
+            $table->timestamp('add_date')->nullable()->comment('添加时间');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
