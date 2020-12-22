@@ -48,7 +48,7 @@ class UserController extends BaseController
                 'userinfo' => $user,
             ]);
         }
-        return $this->success();
+        return $this->fail();
     }
 
     /**

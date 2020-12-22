@@ -60,7 +60,9 @@ class UserLogic
     {
         $userData = User::query()->where(['username' => $username])->first();
         if ($userData && $userData->password === $this->User->password($password)) {
-            return $userData->toArray();
+            $res = $userData->toArray();
+            unset($res['password']);
+            return $res;
         }
         return false;
     }
