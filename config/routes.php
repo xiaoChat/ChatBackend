@@ -67,5 +67,5 @@ Router::addGroup(
 // Websocket
 Router::addServer('ws', function () {
     Router::get('/', 'App\Controller\Chat\WebSocketController');
-    Router::get('/chat', 'App\Controller\Chat\ChatController');
+    Router::get('/chat/{id}', 'App\Controller\Chat\ChatController');
 });
